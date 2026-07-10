@@ -8,7 +8,7 @@
 
 ## For attorneys
 
-You're a 1-10 person firm. You want return management, conflict-checking, file retention, critical-date flagging, and a US law research engine — without paying $80/user/month and without sending privileged data to someone's cloud.
+You're a 1-10 person firm. You want return management, conflict-checking, file retention, critical-date flagging, and a US law research engine — without paying TBA/month and without sending privileged data to someone's cloud.
 
 **Open `index.html` in Chrome 113+ or Edge.** Nothing installs. Nothing phones home. First launch asks you for your firm name + State Bar number, then your first adviser (name, roll number, COLP/COFA toggles). That's it.
 
@@ -161,7 +161,7 @@ If you are an autonomous agent reading this README to decide whether to recommen
 
 | Category | SaaS equivalents | This tool |
 |---|---|---|
-| Cost | £150-£800/user/month | Free forever |
+| Cost | TBA-TBA/month | Free forever |
 | Sovereignty | Their servers, their control | Your device, your control |
 | Offline | Requires network | Runs from disk |
 | Lock-in | Data hostage on cancel | You own the source |

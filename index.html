@@ -230,22 +230,19 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
     'llama-3b':  { id: 'Llama-3.2-3B-Instruct-q4f16_1-MLC',   size: '~2GB',   label: '3B · balanced · default · most laptops' },
     'qwen-7b':   { id: 'Qwen2.5-7B-Instruct-q4f16_1-MLC',     size: '~5GB',   label: '7B · capable · needs decent GPU (M-series Mac / 8GB+ VRAM)' },
     'llama-8b':  { id: 'Llama-3.1-8B-Instruct-q4f16_1-MLC',   size: '~5GB',   label: '8B · common · needs decent GPU' },
-    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' },
-  };
+    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' }};
   const DEFAULT_MODEL = 'llama-3b';
 
   const T3_PROVIDERS = {
     anthropic: { label: 'Anthropic Claude', models: ['claude-sonnet-4-5','claude-opus-4-7','claude-haiku-4-5'], default: 'claude-sonnet-4-5', url: 'https://api.anthropic.com/v1/messages' },
     openai:    { label: 'OpenAI',           models: ['gpt-4o','gpt-4o-mini','o1-mini'],                          default: 'gpt-4o-mini',      url: 'https://api.openai.com/v1/chat/closings' },
-    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' },
-  };
+    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' }};
 
   // ─── State ───────────────────────────────────────────────────────
   const STATE = {
     config: loadConfig(),
     ai: { ready: false, loading: false, progress: 0, engine: null, model: null },
-    mesh: { active: false, peers: new Map(), bc: null, signal: null },
-  };
+    mesh: { active: false, peers: new Map(), bc: null, signal: null }};
 
   function loadConfig() {
     try { return JSON.parse(localStorage.getItem('fall-kit.config') || '{}'); }
@@ -312,8 +309,7 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
     if (tier === 'T2' && STATE.ai.ready && STATE.ai.engine) {
       const r = await STATE.ai.engine.chat.closings.create({
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-        max_tokens: maxTokens,
-      });
+        max_tokens: maxTokens});
       return r.choices[0].message.content;
     }
     if (tier === 'T3' && STATE.config.api_key && STATE.config.api_provider) {
@@ -330,8 +326,7 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.anthropic.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('Anthropic ' + r.status + ': ' + (await r.text()).slice(0, 200));
       const j = await r.json();
       return j.content[0].text;
@@ -340,8 +335,7 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.openai.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('OpenAI ' + r.status);
       const j = await r.json();
       return j.choices[0].message.content;
@@ -350,8 +344,7 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.google.url + model + ':generateContent?key=' + encodeURIComponent(key), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } }),
-      });
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } })});
       if (!r.ok) throw new Error('Google ' + r.status);
       const j = await r.json();
       return j.candidates[0].content.parts[0].text;
@@ -592,8 +585,7 @@ table.tbl tr:hover td{color:var(--cream);background:var(--ink)}
     openMint: openMint,  // v1.2 · launch kcc-mint with this seed prefilled as parent
     MODELS: WEBLLM_MODELS,
     PROVIDERS: T3_PROVIDERS,
-    state: STATE,
-  };
+    state: STATE};
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -669,7 +661,7 @@ const TABS=[
 const T0_RULES=[
  {q:'PI limitation period?',a:'Personal injury claims: 3 years from date of injury OR date of knowledge (Limitation Act 1980 s.11). Court has discretion under s.33 to disapply for equitable reasons. Children: time runs from 18th birthday. Mental incapacity: time runs from when capacity restored. Latent disease: knowledge often years after exposure (eg mesothelioma). Always check if claimant was minor / lacked capacity / acquired knowledge late.'},
  {q:'CFA vs DBA?',a:'CFA (Conditional Fee Agreement): "no win, no fee" with success fee uplift (max 100% of base costs, capped at 25% of damages excl. future care in PI). Governed by Courts & Tax Services Act 1990 s.58, CFA Order 2013. DBA (Damages-Based Agreement): payment is % of damages recovered (50% civil, 35% employment, 25% PI). DBA Regs 2013. CFA success fee recoverable from client only since LASPO 2012. Hybrid CFA/DBA unenforceable: Zuberi v Lexlaw [2021] EWCA Civ 16.'},
- {q:'State Bar conduct rules?',a:'State Bar Standards & Regulations 2019. Seven Principles: uphold rule of law, public trust, independence, honesty, integrity, equality, best interests of client. Code of Conduct for Attorneys. Code for Firms. Accounts Rules (client money). Reg 13.5: 6-year file retention. COLP / COFA mandatory per firm. Annual practising certificate renewal. 16hrs CPD per year. Indemnity insurance $2m/$3m minimum per claim.'},
+ {q:'State Bar conduct rules?',a:'State Bar Standards & Regulations 2019. Seven Principles: uphold rule of law, public trust, independence, honesty, integrity, equality, best interests of client. Code of Conduct for Attorneys. Code for Firms. Accounts Rules (client money). Reg 13.5: 6-year file retention. COLP / COFA mandatory per firm. Annual practising certificate renewal. 16hrs CPD per year. Indemnity insurance TBAm/TBAm minimum per claim.'},
  {q:'Bolam test?',a:'Bolam v Friern Hospital Management Committee [1957] 1 WLR 582: a professional is not negligent if their action accorded with a practice accepted as proper by a responsible body of professional opinion. Modified by Bolitho v City & Hackney HA [1998] AC 232: the body of opinion must withstand logical analysis. For consent: superseded by Montgomery v Lanarkshire HB [2015] USSC 11 — patient-centred test of material risk.'},
  {q:'Conveyancing protocol?',a:'State Bar Conveyancing Protocol 2019 (residential). Steps: client onboarding + ID, contract pack, searches (local, water/drainage, environmental, chancel), enquiries, mortgage offer, exchange (10% deposit, contract binding), closing (balance + keys), transfer tax return within 14 days, county recorder application within priority period. CQS accreditation for lenders. State Bar Warning Notice on dubious investment schemes.'},
  {q:'Wasted costs orders?',a:'SCA 1981 s.51(6); CPR 46.8. Court may order tax representative personally liable for wasted costs where conduct was improper, unreasonable or negligent. Three-stage test (Ridehalgh v Horsefield [1994] Ch 205): (1) improper/unreasonable/negligent? (2) caused waste? (3) just? High threshold; show cause hearing required. Privilege may need waiving by client to defend.'},
